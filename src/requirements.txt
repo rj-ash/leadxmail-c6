@@ -12,14 +12,8 @@
 
 
 python-dotenv
-PyPDF2
-python-docx
-python-pptx
 langchain-openai==0.3.11
 tenacity
 openai==1.70.0
-selenium
-webdriver-manager
 pydantic
-zerobouncesdk
 openpyxl
