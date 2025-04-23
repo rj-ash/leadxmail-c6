@@ -220,77 +220,77 @@ def generate_email_for_multiple_leads(leads_list: list, product_details: str) ->
     
     return all_emails
 
-def main():
-    """
-    Main function to test personalized email generation with sample data
-    """
-    # Sample product details
-    product_details = """
-    Product: AI-Powered Analytics Platform
+# def main():
+#     """
+#     Main function to test personalized email generation with sample data
+#     """
+#     # Sample product details
+#     product_details = """
+#     Product: AI-Powered Analytics Platform
     
-    Key Features:
-    - Real-time data processing and visualization
-    - Advanced machine learning algorithms
-    - Customizable dashboards
-    - Enterprise-grade security
-    - 24/7 technical support
+#     Key Features:
+#     - Real-time data processing and visualization
+#     - Advanced machine learning algorithms
+#     - Customizable dashboards
+#     - Enterprise-grade security
+#     - 24/7 technical support
     
-    Benefits:
-    - 40% faster decision-making
-    - 60% reduction in manual data analysis
-    - Seamless integration with existing systems
-    - Scalable architecture
-    - Competitive pricing
-    """
+#     Benefits:
+#     - 40% faster decision-making
+#     - 60% reduction in manual data analysis
+#     - Seamless integration with existing systems
+#     - Scalable architecture
+#     - Competitive pricing
+#     """
 
-    # Sample lead details
-    sample_lead = {
-        'Name': 'John Doe',
-        'Current experience': 'Senior Data Scientist with 5 years of experience in machine learning and big data analytics',
-        'Education': 'M.S. in Computer Science from Stanford University',
-        'Company': 'TechCorp Inc.',
-        'Company overview': 'Leading provider of enterprise software solutions',
-        'Company industry': 'Technology and Software Development'
-    }
+#     # Sample lead details
+#     sample_lead = {
+#         'Name': 'John Doe',
+#         'Current experience': 'Senior Data Scientist with 5 years of experience in machine learning and big data analytics',
+#         'Education': 'M.S. in Computer Science from Stanford University',
+#         'Company': 'TechCorp Inc.',
+#         'Company overview': 'Leading provider of enterprise software solutions',
+#         'Company industry': 'Technology and Software Development'
+#     }
 
-    # Sample list of leads
-    sample_leads = [
-        {
-            'Name': 'John Doe',
-            'Current experience': 'Senior Data Scientist with 5 years of experience in machine learning and big data analytics',
-            'Education': 'M.S. in Computer Science from Stanford University',
-            'Company': 'TechCorp Inc.',
-            'Company overview': 'Leading provider of enterprise software solutions',
-            'Company industry': 'Technology and Software Development'
-        },
-        {
-            'Name': 'Jane Smith',
-            'Current experience': 'Product Manager with 3 years of experience in enterprise software',
-            'Education': 'MBA from Harvard Business School',
-            'Company': 'Enterprise Solutions Ltd.',
-            'Company overview': 'Provider of enterprise resource planning software',
-            'Company industry': 'Enterprise Software'
-        }
-    ]
+#     # Sample list of leads
+#     sample_leads = [
+#         {
+#             'Name': 'John Doe',
+#             'Current experience': 'Senior Data Scientist with 5 years of experience in machine learning and big data analytics',
+#             'Education': 'M.S. in Computer Science from Stanford University',
+#             'Company': 'TechCorp Inc.',
+#             'Company overview': 'Leading provider of enterprise software solutions',
+#             'Company industry': 'Technology and Software Development'
+#         },
+#         {
+#             'Name': 'Jane Smith',
+#             'Current experience': 'Product Manager with 3 years of experience in enterprise software',
+#             'Education': 'MBA from Harvard Business School',
+#             'Company': 'Enterprise Solutions Ltd.',
+#             'Company overview': 'Provider of enterprise resource planning software',
+#             'Company industry': 'Enterprise Software'
+#         }
+#     ]
 
-    print("\nTesting generate_email_for_single_lead:")
-    print("-" * 50)
-    try:
-        result = generate_email_for_single_lead(sample_lead, product_details)
-        print(result)
-        # print(f"\nBody: {result['body']}")
-    except Exception as e:
-        print(f"Error in single lead generation: {str(e)}")
+#     print("\nTesting generate_email_for_single_lead:")
+#     print("-" * 50)
+#     try:
+#         result = generate_email_for_single_lead(sample_lead, product_details)
+#         print(result)
+#         # print(f"\nBody: {result['body']}")
+#     except Exception as e:
+#         print(f"Error in single lead generation: {str(e)}")
 
-    print("\nTesting generate_email_for_multiple_leads:")
-    print("-" * 50)
-    try:
-        results = generate_email_for_multiple_leads(sample_leads, product_details)
-        print(results)
-    except Exception as e:
-        print(f"Error in multiple leads generation: {str(e)}")
+#     print("\nTesting generate_email_for_multiple_leads:")
+#     print("-" * 50)
+#     try:
+#         results = generate_email_for_multiple_leads(sample_leads, product_details)
+#         print(results)
+#     except Exception as e:
+#         print(f"Error in multiple leads generation: {str(e)}")
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
 
 
