@@ -1,0 +1,25 @@
+# langchain-openai==0.3.11
+# openai==1.70.0
+# python-dotenv==1.0.0
+# PyPDF2==3.0.1
+# python-docx==1.0.1
+# python-pptx==0.6.22
+# selenium==4.15.2
+# webdriver-manager==4.0.1
+# tenacity==8.2.3
+# pydantic==2.8.2
+# zerobouncesdk==1.1.0
+
+
+python-dotenv
+PyPDF2
+python-docx
+python-pptx
+langchain-openai==0.3.11
+tenacity
+openai==1.70.0
+selenium
+webdriver-manager
+pydantic
+zerobouncesdk
+openpyxl
