@@ -17,3 +17,4 @@ tenacity
 openai==1.70.0
 pydantic
 openpyxl
+gunicorn
