@@ -1,0 +1,55 @@
+
+// Input
+{
+    "leads": [
+        
+        {
+            "Name": "Ashish singh",
+            "Current_experience": "Jr Data Scientist",
+            "Education": "Computer Science",
+            "Company": "psi",
+            "Company_overview": "Leading tech company",
+            "Company_industry": "Technology"
+        },
+        {
+            "Name": "Anshul Pandey",
+            "Current_experience": "Founder",
+            "Education": "Btech Computer Science",
+            "Company": "psi",
+            "Company_overview": "Leading tech company",
+            "Company_industry": "Technology"
+        },
+        {
+            "Name": "Dheerendra",
+            "Current_experience": "CTO",
+            "Education": "M.S. Computer Science",
+            "Company": "TechCorp",
+            "Company_overview": "Leading tech company",
+            "Company_industry": "Technology"
+        }
+    ],
+    "product": {
+        "details": "AI-Powered Analytics Platform with real-time processing"
+    }
+}
+
+
+// Output:
+
+[
+    
+    {
+        "subject": "unlock real-time insights at psi, ashish!",
+        "body": "hi ashish,\n\ni came across your profile while exploring talent in the tech industry and was impressed by your journey as a jr data scientist at psi. it’s exciting to see how you’re contributing to a leading tech company with a strong foundation in computer science.\n\nin the fast-paced technology sector, having access to real-time data can make all the difference. many companies face challenges in harnessing analytics effectively, often resulting in missed opportunities and delayed decision-making. our ai-powered analytics platform is designed to tackle these exact hurdles, enabling teams to process data in real-time, derive actionable insights instantly, and enhance overall operational efficiency. with our solution, organizations have reported significant improvements in data-driven decision-making and increased productivity.\n\ni would love to show you how our platform can support your work at psi and help you leverage data to its fullest potential. how does a quick 20-minute demo this week sound? you can easily schedule a time that works for you [here]. i appreciate your time and look forward to your response!\n\nbest regards,\n[your name]  \n[your position]  \n[your company]  \n[your contact information]"
+    },
+    {
+        "subject": "unlock real-time insights for psi's growth, anshul!",
+        "body": "hi anshul,\n\ni came across your impressive journey as the founder of psi and your background in computer science, and it’s clear that you’re driving innovation in the tech space. your leadership at a leading tech company like psi caught my attention, especially as i was exploring how ai can transform analytics.\n\nin today’s fast-paced technology industry, making real-time decisions is crucial. many companies face challenges with slow data processing, leading to missed opportunities and inefficiencies. our ai-powered analytics platform addresses this pain point by offering real-time processing that empowers your team to make informed decisions swiftly. this not only enhances operational efficiency but also positions psi to leverage data for strategic advantage. past implementations have shown significant improvements in decision-making speed and accuracy for companies similar to yours.\n\ni would love to demonstrate how our platform can integrate seamlessly into your operations and support your vision for psi. are you available for a quick demo this week? here’s a [link to schedule](#) a time that works for you.\n\nthank you for considering this opportunity, and i look forward to your response.\n\nbest regards,\n[your name]  \n[your position]  \n[your company]  \n[your contact information]  \n"
+    },
+    {
+        "subject": "transform techcorp's insights with real-time analytics",
+        "body": "hi dheerendra,\n\ni was reviewing your impressive background as cto at techcorp and couldn't help but admire your journey in the technology sector, especially your expertise in leveraging innovative solutions. your m.s. in computer science must have provided a solid foundation for your leadership in a leading tech company. \n\nin the fast-paced technology industry, timely decision-making is crucial, yet many companies struggle with data overload and slow insights. our ai-powered analytics platform offers real-time processing that empowers teams to make informed decisions swiftly, enhancing operational efficiency. by integrating our platform, techcorp can harness its data effectively, turning complex information into actionable insights that drive growth and innovation.\n\ni would love to show you how our platform can elevate your analytics capabilities. could we schedule a quick demo this week? please let me know a time that works for you, or you can book directly through my calendar [insert scheduling link]. i appreciate your time and look forward to the opportunity to connect!\n\nbest regards,\n[your name]\n[your position]\n[your company]\n[your contact information]"
+    }
+]
+
+

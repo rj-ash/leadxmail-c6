@@ -11,6 +11,7 @@ app = FastAPI(
 
 class LeadDetails(BaseModel):
     Name: str
+    Lead_ID: int
     Current_experience: str
     Education: str
     Company: str
@@ -18,6 +19,7 @@ class LeadDetails(BaseModel):
     Company_industry: str
 
 class EmailResponse(BaseModel):
+    lead_id: int
     subject: str
     body: str
 
@@ -73,6 +75,6 @@ async def health_check():
     """
     return {"status": "healthy"}
 
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run(app, host="0.0.0.0", port=8001) 
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8001) 
