@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware 
 from typing import List, Optional
 from personalised_email import generate_email_for_single_lead, generate_email_for_multiple_leads
 
@@ -7,6 +8,14 @@ app = FastAPI(
     title="Personalized Email Generation API",
     description="API for generating personalized emails based on lead and product information",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:8080"],  # Allow your frontend origin
+    allow_credentials=True,
+    allow_methods=["*"],  # Allow all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers
 )
 
 class LeadDetails(BaseModel):

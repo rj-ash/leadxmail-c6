@@ -251,22 +251,6 @@ def main():
     # print(generate_email_for_single_lead(sample_lead, product_details))
     print(generate_email_for_multiple_leads(sample_leads, product_details))
 
-    # print("\nTesting generate_email_for_single_lead:")
-    # print("-" * 50)
-    # try:
-    #     result = generate_email_for_single_lead(sample_lead, product_details)
-    #     print(result)
-    #     # print(f"\nBody: {result['body']}")
-    # except Exception as e:
-    #     print(f"Error in single lead generation: {str(e)}")
-
-    # print("\nTesting generate_email_for_multiple_leads:")
-    # print("-" * 50)
-    # try:
-    #     results = generate_email_for_multiple_leads(sample_leads, product_details)
-    #     print(results)
-    # except Exception as e:
-    #     print(f"Error in multiple leads generation: {str(e)}")
 
 if __name__ == "__main__":
     main()
