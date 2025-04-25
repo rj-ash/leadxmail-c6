@@ -68,7 +68,10 @@ I'd love to schedule a brief demo to show you how our solution could benefit [Co
 Best regards,
 [Your Name]
 [Your Position]
-[Your Company]"""
+[Your Company]
+[Your Contact Information]
+Replace [Your Name], [Your Position], [Your Company] with your name, position and company name given in the product_details
+Replace [Your Contact Information] with your contact information given in the product_details"""
         })
 
 
@@ -118,7 +121,7 @@ Make sure the email is unique and highly personalized based on the lead's profil
     # Parse the response into a dictionary
     try:
         # Clean the response and safely parse it
-        email_response = email_response.strip().lower().replace('json', '', 1).strip().strip('`').strip()
+        email_response = email_response.strip().replace('json', '', 1).strip().strip('`').strip()
         result_dict = json.loads(email_response)
         
         # Ensure the response has the correct structure
