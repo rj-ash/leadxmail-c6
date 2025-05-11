@@ -76,9 +76,30 @@ Replace [Your Contact Information] with your contact information given in the pr
 
 
 # Define the email generation prompt
-prompt = """You are an B2B expert marketer. Based on the list of leads, their details and the product document provides , write a personalized email to the lead (whose details are provided) in a concise manner, keeping in mind they have limited time to read the email. Each email should have:  1. **Subject:** The subject line should be catchy, highly personalized and relevant to the lead's profile. 2. **Body:** The email body should be structured naturally, incorporating:  - A personalized introduction  - Key product features, unique selling points (USPs), and benefits tailored to the lead's profile, without explicitly labeling them as separate sections.  - A persuasive closing with a compelling call to action (CTA) to encourage engagement (e.g., scheduling a demo, signing up for a trial, etc.).  Ensure that all elements (introduction, product benefits, CTA) are woven into the body fluidly without explicit section headers like 'Introduction' or 'Call to Action.'  Also, just provide the email content as requested. Do not include any introductory or concluding remarks like 'Here's your template' or 'Let me know if you need anything else.' The response should contain **only the emails** in the specified format. At the end of mail, Greet with regards, your name and contact details (take from product pdf, if provided, else leave as template). Make sure generated emails for different leads stay diverse, not share common template and are highly personalised and relevant. Also do not link the product with the lead in the fields that are not fitting to the product, try match features of product to the fitted area of lead other wise need not to mention. You can trade off formality for creativity as long as you are not sounding too informal and unprofessional to grab the attention of lead."""
-personalisation_convention = """ Take a look at the details of lead primarily on their experience, education, current company's industry and overview then skills and bio and then match it with the product features and benefits. In first paragraph greet them and talked about their details, avoid common templates (like I hope this email finds you well) and write a catcy introduction but natural (look like written by a human), try different variations. Include like I was going through your linkedin profile and noticed this this and this (this should be a common interest of the lead and your product). In next paragraph, talk about potential problems existing in his industry (Refer prvided product document and take the problem from that document) and then introduce the product and clearly articulate how the product addresses a specific problem or enhances their current processes, supported by concise benefits. Also mention about the past achievements and works of product if mentioned in document. At last conclude this with a CTA, a specific time for a demo or provide a scheduling link, making it easy for the recipient to respond. Express appreciation for their time and consideration, and indicate your anticipation of their response. At last put your signature: Include full name (Template), position, company name(Template), contact information (Template), and a professional sign-off. Refrain from fitting the product features to the lead details, if it is not fitting, do not mention it."""
-
+prompt = """You are an B2B expert marketer. Based on the list of leads, their details and the product document provides , write a personalized email to the lead  in a concise manner, keeping in mind they have limited time to read the email. It shoud be casual and not too formal. Avoide using unnecessary words and too much buttering. Be casual, friendly and direct. Each email should have:  1. **Subject:** The subject line should be catchy, highly personalized and relevant to the lead's profile. 2. **Body:** Start with telling the leads that you were going through your profile and talk a bit about his company. Then in next para, talk about problems in the industry of his company and introduce your product stating how it solve this problem. Get the details from product_details section. Then a compelling CTA asking him to schedule a meet or a call to discuss it further. Keep it short direct, casual, catchy and dont use too much formal jargonand avoid common templates (like I hope this email finds you well, etc). It should look as it is written by a human after carefully studying his profile and his company's details."""
+style = """
+Do not use any common templates like I hope this email finds you well, etc.
+Do not use too much buttering and unnecessary words.
+Be casual, friendly and direct. Use human like tone and language. Follow this style:
+1. First Person Pronouns: I, me, my, mine, we, us, our, ours. Write as if you are the one talking to the lead and do not use generalised statements.
+2. Fillers & Disfluencies
+Spoken or informal written human language often includes:
+	•	uh, um, like, you know, kinda, sorta, actually, basically, literally
+	•	contractions: gonna, wanna, gotta, ain’t
+3. Personal Experience Markers
+	•	I think, I believe, I feel, in my opinion
+	•	yesterday, last week, when I was in school
+	•	my friend, my boss, my mom said
+4. Typos and Misspellings
+Humans often make minor spelling or grammatical errors:
+	•	definately → definitely
+	•	alot → a lot
+	•	seperate → separate
+5. Emotional/Spontaneous Expressions
+Humans express feelings impulsively or with less filter:
+	•	wow, amazing, omg, haha, lol, damn, yay
+	•	love it, hate that, so cool, super weird
+"""
 def generate_email_for_single_lead(lead_details: dict, product_details: str) -> dict:
     """
     Generate a personalized email for a single lead
@@ -101,14 +122,15 @@ def generate_email_for_single_lead(lead_details: dict, product_details: str) -> 
     instructed_prompt = f"""
 Based on the following lead details, product information and the prompt, generate a personalized email and follow the personalisation convention for the lead.
 
+prompt: ```{prompt}```
+style: ```{style}```
 Lead Details: {lead_details}
 Product Information: {product_details}
 
-prompt: ```{prompt}```
-personalisation convention: ```{personalisation_convention}```
+
 
 Generate a personalized email following the format specified in the prompt above.
-Return the results in a dictionary with three keys:
+Return the results in a dictionary with these keys:
 1. 'subject': The email subject line
 2. 'body': The email body content
 
@@ -199,34 +221,146 @@ def main():
     """
     Main function to test personalized email generation with sample data
     """
-    # Sample product details
+#     # Sample product details
     product_details = """
-    Product: AI-Powered Analytics Platform
-    
-    Key Features:
-    - Real-time data processing and visualization
-    - Advanced machine learning algorithms
-    - Customizable dashboards
-    - Enterprise-grade security
-    - 24/7 technical support
-    
-    Benefits:
-    - 40% faster decision-making
-    - 60% reduction in manual data analysis
-    - Seamless integration with existing systems
-    - Scalable architecture
-    - Competitive pricing
+InvestorBase is an AI-powered platform designed to revolutionize deal flow management for venture capitalists (VCs). It automates the evaluation of pitch decks, enabling VCs to identify high-potential opportunities efficiently, reducing manual workloads, and minimizing missed prospects. The platform streamlines investment decision-making through AI-driven analysis, real-time market validation, and customizable deal scoring models.
+Key Features & Capabilities
+Comprehensive Pitch Deck Analysis
+Executive Summary Assessment: Evaluates the clarity of value proposition and business model.
+Market Size Validation: Cross-references TAM/SAM/SOM claims with industry databases.
+Financial Model Scrutiny: Flags unrealistic growth projections and validates unit economics.
+Competitive Landscape Analysis: Maps startup positioning against established players.
+Team Background Verification: Assesses founder experience relevance to venture success.
+Advanced Market Validation
+Industry Growth Trends: Overlays startup trajectory against sector forecasts.
+Regulatory Impact Assessment: Identifies compliance challenges in regulated industries.
+Geographic Expansion Feasibility: Evaluates market entry barriers for scaling plans.
+Technology Adoption Curves: Compares innovation timing with market readiness.
+Customer Acquisition Cost Benchmarking: Compares CAC/LTV ratios with industry standards.
+Customized Deal Prioritization
+Investment Thesis Alignment: Scores opportunities against firm-specific criteria.
+Portfolio Fit Analysis: Identifies synergies with existing investments.
+Stage-Specific Metrics: Adapts evaluation criteria based on startup maturity.
+Risk-Adjusted Return Potential: Weighs opportunities by both upside and risk factors.
+Follow-on Investment Planning: Highlights portfolio companies ready for additional funding.
+
+Use Cases
+Efficiency Gains for Venture Capitalists
+Reduces initial screening time by 70-80% through automated analysis.
+Increases deal throughput capacity by 3-5x without adding staff.
+Enables analysts to focus on high-value activities (founder interactions, due diligence) instead of basic screening.
+Cuts meeting time spent discussing marginal deals by 40-50%.
+Enhanced Market Intelligence
+Automates research on industry trends, competition, and regulatory factors.
+Provides real-time validation of startup claims, reducing reliance on manual verification.
+Enhances decision-making with dynamic scoring models that adapt to market conditions.
+Strategic Investment Decision Support
+Identifies promising outliers that traditional screening might miss.
+Improves portfolio diversification through objective opportunity assessment.
+Enhances decision consistency across investment team members.
+Increases deal flow quality through better founder targeting and feedback.
+
     """
 
     # Sample lead details
     sample_lead = {
-        'Name': 'John Doe',
+        'Name': 'Rohit Jain',
         'Lead_ID': 1010101,
-        'Current experience': 'Senior Data Scientist with 5 years of experience in machine learning and big data analytics',
-        'Education': 'M.S. in Computer Science from Stanford University',
-        'Company': 'TechCorp Inc.',
-        'Company overview': 'Leading provider of enterprise software solutions',
-        'Company industry': 'Technology and Software Development'
+        'Current experience': """CoinDCX
+CoinDCX
+Full-time ¬∑ 4 yrs 4 mos
+Full-time ¬∑ 4 yrs 4 mos
+Head Web3 and DeFi (Okto)
+Head Web3 and DeFi (Okto)
+2024 - Present ¬∑ 1 yr 4 mos
+2024 to Present ¬∑ 1 yr 4 mos
+MD, CoinDCX Ventures
+MD, CoinDCX Ventures
+2021 - Present ¬∑ 4 yrs 4 mos
+2021 to Present ¬∑ 4 yrs 4 mos
+Chief Strategy and Investment Officer
+Chief Strategy and Investment Officer
+2021 - Present ¬∑ 4 yrs 4 mos
+2021 to Present ¬∑ 4 yrs 4 mos
+Bengaluru, Karnataka, India
+Bengaluru, Karnataka, India
+Head Web3 and DeFi (Okto)
+Head Web3 and DeFi (Okto)
+2024 - Present ¬∑ 1 yr 4 mos
+2024 to Present ¬∑ 1 yr 4 mos
+Angel portfolio:
+ASQI (secured lending platform on blockchain; securitized by tokenized traditional financial assets like stocks, bonds)
+Ava Labs (blockchain/smartcontract platform)
+RIA (digital insurer in India)
+TheList (global luxury ecommerce)
+Canvas (HR Tech focused on diversity hires)
+
+Advisor/Mentor:
+CV Labs (global blockchain accelerator)
+BuildersTribe (India blockchain accelerator)
+100x.vc
+TheThirdPillar (Upwork on Blockchain)
+Goals101 (FIntech - API based solutions for banks)
+Angel portfolio:
+ASQI (secured lending platform on blockchain; securitized by tokenized traditional financial assets like stocks, bonds)
+Ava Labs (blockchain/smartcontract platform)
+RIA (digital insurer in India)
+TheList (global luxury ecommerce)
+Canvas (HR Tech focused on diversity hires)
+
+Advisor/Mentor:
+CV Labs (global blockchain accelerator)
+BuildersTribe (India blockchain accelerator)
+100x.vc
+TheThirdPillar (Upwork on Blockchain)
+Goals101 (FIntech - API based solutions for banks)
+Fundamentum is a $100M growth stage fund, founded by Nandan Nilekani and Sanjeev Aggarwal.
+
+Portfolio:
+Travel Triangle
+PharmEasy
+Spinny
+Fareye
+Fundamentum is a $100M growth stage fund, founded by Nandan Nilekani and Sanjeev Aggarwal.
+
+Portfolio:
+Travel Triangle
+PharmEasy
+Spinny
+Fareye
+Helping and mentoring tech entrepreneurs with fund-raising, strategy and product development. Evaluating opportunities esp in the B2B e-commerce space.
+
+Launched Buyoco - a B2B Crossborder E-Commerce platform that helps retailers in India (to begin with) import from manufacturers in China and Bangladesh (to begin with) and give them an end-to-end fulfilment experience.
+Helping and mentoring tech entrepreneurs with fund-raising, strategy and product development. Evaluating opportunities esp in the B2B e-commerce space.
+
+Launched Buyoco - a B2B Crossborder E-Commerce platform that helps retailers in India (to begin with) import from manufacturers in China and Bangladesh (to begin with) and give them an end-to-end fulfilment experience.'""",
+        'Education': """Education
+Education
+Harvard Business School
+Harvard Business School
+MBA
+MBA
+2004 - 2006
+2004 - 2006
+Indian Institute of Technology, Guwahati
+Indian Institute of Technology, Guwahati
+Bachelor of Technology (BTech), Computer Science
+Bachelor of Technology (BTech), Computer Science
+1997 - 2001
+1997 - 2001
+Activities and societies: Cultural Secretary (Gymkhana Council), Organizer Alcheringa (annual Cultural festival), Co-organizer Techniche (annual Technical festival), Captain - Soccer Team, Member - Table Tennis and Athletics teams; Organizer Dramatics Club and other clubs on-campus.
+Show all 3 educations""",
+        'Company': 'CoinDCX',
+        'Company overview': """Established in 2018, CoinDCX is the preferred crypto exchange in India, but also an instrumental player in building the broader Web3 ecosystem. 
+
+Trusted by over 1.4 crore registered users. Our mission is simple: to provide easy access to Web3 experiences and democratize investments in virtual digital assets. We prioritize user safety and security, strictly adhering to KYC and AML guidelines. 
+
+In our commitment to quality, we employ a stringent 7M Framework for the listing of crypto projects, ensuring users access only the safest virtual digital assets. CoinDCX has partnered with Okto for India to launch a secure multi-chain DeFi app that offers a keyless, self-custody wallet . It aims to simplify the world of decentralized finance (DeFi) by providing a secure, user-friendly, and innovative solution for managing virtual digital assets. 
+
+Through CoinDCX Ventures, we've invested in over 15 innovative Web3 projects, reinforcing our dedication to the Web3 ecosystem. Our flagship educational initiative, #NamasteWeb3, empowers Indians with web3 knowledge, preparing them for the future of virtual digital assets. CoinDCX's vision and potential have gained the confidence of global investors, including Pantera, Steadview Capital, Kingsway, Polychain Capital, B Capital Group, Bain Capital Ventures, Cadenza, Draper Dragon, Republic, Kindred, and Coinbase Ventures. 
+
+At CoinDCX, we're leading India towards the decentralized future of Web3 with an unwavering commitment to safety, simplicity, and education.""",
+        'Company industry': 'Financial Services'
     }
 
     # Sample list of leads
@@ -251,8 +385,8 @@ def main():
         }
     ]
 
-    # print(generate_email_for_single_lead(sample_lead, product_details))
-    print(generate_email_for_multiple_leads(sample_leads, product_details))
+    print(generate_email_for_single_lead(sample_lead, product_details))
+    # print(generate_email_for_multiple_leads(sample_leads, product_details))
 
 
 if __name__ == "__main__":

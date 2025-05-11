@@ -19,13 +19,13 @@ app.add_middleware(
 )
 
 class LeadDetails(BaseModel):
-    Name: str
-    Lead_ID: int
-    Current_experience: str
-    Education: str
-    Company: str
-    Company_overview: str
-    Company_industry: str
+    name: str
+    lead_id: int
+    experience: str
+    education: str
+    company: str
+    company_overview: str
+    company_industry: str
 
 class EmailResponse(BaseModel):
     lead_id: int
