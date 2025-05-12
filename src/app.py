@@ -20,7 +20,7 @@ app.add_middleware(
 
 class LeadDetails(BaseModel):
     name: str
-    lead_id: int
+    lead_id: str
     experience: str
     education: str
     company: str
@@ -28,7 +28,7 @@ class LeadDetails(BaseModel):
     company_industry: str
 
 class EmailResponse(BaseModel):
-    lead_id: int
+    lead_id: str
     subject: str
     body: str
 

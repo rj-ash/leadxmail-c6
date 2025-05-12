@@ -13,7 +13,7 @@ load_dotenv()
 class EmailResponse(BaseModel):
     subject: str
     body: str
-    lead_id: int
+    lead_id: str
 
 # Define the email generation prompt
 prompt = """You are an B2B expert marketer. Based on the list of leads, their details and the product document provides , write a personalized email to the lead  in a concise manner, keeping in mind they have limited time to read the email. It shoud be casual and not too formal. Avoide using unnecessary words and too much buttering. Be casual, friendly and direct. Each email should have:  1. **Subject:** The subject line should be catchy, highly personalized and relevant to the lead's profile. 2. **Body:** Start with telling the leads that you were going through your profile and talk a bit about his company. Then in next para, talk about problems in the industry of his company and introduce your product stating how it solve this problem. Get the details from product_details section. Then a compelling CTA asking him to schedule a meet or a call to discuss it further. Keep it short direct, casual, catchy and dont use too much formal jargonand avoid common templates (like I hope this email finds you well, etc). It should look as it is written by a human after carefully studying his profile and his company's details."""
@@ -47,7 +47,7 @@ def generate_email_for_single_lead(lead_details: dict, product_details: str) -> 
     Args:
         lead_details (dict): Dictionary containing lead details with keys:
             - name: str
-            - lead_id: Union[int, str]
+            - lead_id: str
             - experience: str
             - education: str
             - company: str
@@ -105,7 +105,7 @@ def generate_email_for_multiple_leads(leads_list: list, product_details: str) ->
     Args:
         leads_list (list): List of dictionaries, where each dictionary contains lead details with keys:
             - name: str
-            - lead_id: Union[int, str]
+            - lead_id: str
             - experience: str
             - education: str
             - company: str
@@ -138,7 +138,7 @@ def generate_email_for_multiple_leads(leads_list: list, product_details: str) ->
                 batch_emails.append({
                     'subject': 'Error generating email',
                     'body': f'Error generating personalized email: {str(e)}',
-                    'lead_id': lead.get('lead_id')
+                    'lead_id': str(lead.get('lead_id'))
                 })
         
         # Add the batch results to our main list
