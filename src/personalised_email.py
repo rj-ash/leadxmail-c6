@@ -16,8 +16,9 @@ class EmailResponse(BaseModel):
     lead_id: str
 
 # Define the email generation prompt
-prompt = """You are an B2B expert marketer. Based on the list of leads, their details and the product document provides , write a personalized email to the lead  in a concise manner, keeping in mind they have limited time to read the email. It shoud be casual and not too formal. Avoide using unnecessary words and too much buttering. Be casual, friendly and direct. Each email should have:  1. **Subject:** The subject line should be catchy, highly personalized and relevant to the lead's profile. 2. **Body:** Start with telling the leads that you were going through your profile and talk a bit about his company. Then in next para, talk about problems in the industry of his company and introduce your product stating how it solve this problem. Get the details from product_details section. Then a compelling CTA asking him to schedule a meet or a call to discuss it further. Keep it short direct, casual, catchy and dont use too much formal jargonand avoid common templates (like I hope this email finds you well, etc). It should look as it is written by a human after carefully studying his profile and his company's details."""
+prompt = """You are an B2B expert marketer. Based on the list of leads, their details and the product document provides , write a personalized email to the lead  in a concise manner, keeping in mind they have limited time to read the email. Write in a way that a fifth year student can understand and state your objective of helping the lead with your product"""
 style = """
+START THE EMAIL WITH A HEADLINE (ALL CAPS, STATE PURPOSE OF THE PRODUCT IN ONE LINE, E.G. WE WANT TO AUTOMATE YOUR ENTIRE HIRING PROCESS (DEPENDING ON THE PRODUCT), YOU FOCUS ON GROWTH. LET THE AI HANDLE (THE MANUAL WORK THAT WE ARE AUTOMATING WITH OUR PRODUCT), Your Process, Reimagined with AI(add personal touch), We Design AI That Gets the Job Done—Without You Lifting a Finger(add personal touch))
 Do not use any common templates like I hope this email finds you well, etc.
 Do not use too much buttering and unnecessary words.
 Be casual, friendly and direct. Use human like tone and language. Follow this style:
@@ -75,11 +76,12 @@ def generate_email_for_single_lead(lead_details: dict, product_details: str) -> 
 Based on the following lead details, product information and the prompt, generate a personalized email and follow the personalisation convention for the lead.
 prompt: ```{prompt}```
 style: ```{style}```
+```It shoud be casual and not too formal. Avoide using unnecessary words and too much buttering. Be casual, friendly and direct. Each email should have:  1. **Subject:** The subject line should be catchy, highly personalized and relevant to the lead's profile.Style: Frame it like a question or a catchy statement that arises curiosity in the reader's mind. (“[First Name], have you already solved this?”, “Is this what [Company Name] is missing?”, “Mind if I share something unusual?(add personal touch)”,“We noticed something strange in [industry]”, “One simple shift = big results”(add personal touch), “This made me pause—thought of your team”(add personal touch)) 2. **Body:** Start with telling the leads that you were going through your profile and talk a bit about his company. Then in next para, talk about problems in the industry of his company and introduce your product stating how it solve this problem. Get the details from product_details section. Then a compelling CTA asking him to schedule a meet or a call to discuss it further. Keep it short direct, casual, catchy and dont use too much formal jargonand avoid common templates (like I hope this email finds you well, etc). It should look as it is written by a human after carefully studying his profile and his company's details.```
 Lead Details: {lead_details}
 Product Information: {product_details}
 Generate a personalized email following the format specified in the prompt above.
 Return the results in a dictionary with these keys:
-1. 'subject': The email subject line
+1. 'subject': The email subject line (style as provided)
 2. 'body': The email body content
 3. 'lead_id': The lead ID
 Make sure the email is unique and highly personalized based on the lead's profile and relevant product features.
