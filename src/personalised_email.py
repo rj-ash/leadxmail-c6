@@ -67,7 +67,7 @@ def generate_email_for_single_lead(lead_details: dict, product_details: str) -> 
     model = ChatOpenAI(
         model="gpt-4o-mini",
         openai_api_key=api_key,
-        temperature=0.7,
+        temperature=0.9,
         max_tokens=4096,
     )
         
