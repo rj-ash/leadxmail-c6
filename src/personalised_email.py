@@ -426,7 +426,7 @@ def generate_email_for_single_lead(lead_details: dict, product_details: str) -> 
             "role": "user",
             "content": f"""
 Task:
-Write a personalized email for the lead above. Follow the subject/body formatting rules. Return the result in a JSON object with keys: 'subject', 'body', and 'lead_id'. Make sure the email must not contain any placeholders (like [xyz]). For sender's contact details, use the details given in the "ProductDetails" section.
+Write a personalized email for the lead above. Follow the subject/body formatting rules. Return the result in a JSON object with keys: 'subject', 'body', and 'lead_id'. Keep variations in starting the email, use different way to start the email. Make sure the email must not contain any placeholders (like [xyz]). For sender's contact details, use the details given in the "ProductDetails" section.
 
 Style Guide:
 {style}
@@ -453,7 +453,7 @@ Return the results in a dictionary with these keys:
     model = ChatOpenAI(
         model="gpt-4o-mini",
         openai_api_key=api_key,
-        temperature=0.9,
+        temperature=1.1,
         max_tokens=4096,
     )
         
