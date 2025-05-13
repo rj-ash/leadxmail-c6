@@ -20,7 +20,7 @@ prompt = """You are an B2B expert marketer. Based on the list of leads, their de
 style = """
 START THE EMAIL WITH A HEADLINE (ALL CAPS, STATE PURPOSE OF THE PRODUCT IN ONE LINE, E.G. WE WANT TO AUTOMATE YOUR ENTIRE HIRING PROCESS (DEPENDING ON THE PRODUCT), YOU FOCUS ON GROWTH. LET THE AI HANDLE (THE MANUAL WORK THAT WE ARE AUTOMATING WITH OUR PRODUCT), Your Process, Reimagined with AI(add personal touch), We Design AI That Gets the Job Done—Without You Lifting a Finger(add personal touch))
 Do not use any common templates like I hope this email finds you well, etc.
-Do not use too much buttering and unnecessary words.
+Do not use too much buttering and unnecessary words specially after the first line (I was going through your profile and noticed your inspiring journey is phenomenal,fabulous, etc. Don't use such unnecessary buttering. Jus go like "I was going through your profile and noticed [mention things which are relevant to product and matches with the lead's profile, no unnecessary buttering]")
 Be casual, friendly and direct. Use human like tone and language. Follow this style:
 1. First Person Pronouns: I, me, my, mine, we, us, our, ours. Write as if you are the one talking to the lead and do not use generalised statements.
 2. Fillers & Disfluencies
