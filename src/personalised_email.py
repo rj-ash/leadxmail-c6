@@ -437,6 +437,11 @@ Lead Details:
 "ProductDetails":
 {product_details}
 
+Return the results in a dictionary with these keys:
+1. 'subject': The email subject line (style as provided)
+2. 'body': The email body content
+3. 'lead_id': The lead ID
+
 """
         }
     ]
@@ -453,26 +458,14 @@ Lead Details:
     )
         
     # Construct the prompt with lead details and product information
-    instructed_prompt = f"""
-Based on the following lead details, product information and the prompt, generate a personalized email and follow the personalisation convention for the lead.
-prompt: ```{prompt}```
-style: ```{style}```
-```It shoud be casual and not too formal. Avoide using unnecessary words and too much buttering. Be casual, friendly and direct. Each email should have:  1. **Subject:** The subject line should be catchy, highly personalized and relevant to the lead's profile.Style: Frame it like a question or a catchy statement that arises curiosity in the reader's mind. (“[First Name], have you already solved this?”, “Mind if I share something unusual?(add personal touch)”,“We noticed something strange in [industry]”, “One simple shift = big results”(add personal touch), “This made me pause—thought of your team”(add personal touch)) 2. **Body:**START THE EMAIL WITH A HEADLINE (ALL CAPS, STATE PURPOSE OF THE PRODUCT IN ONE LINE, E.G. WE WANT TO AUTOMATE YOUR ENTIRE HIRING PROCESS (DEPENDING ON THE PRODUCT), YOU FOCUS ON GROWTH. LET THE AI HANDLE (THE MANUAL WORK THAT WE ARE AUTOMATING WITH OUR PRODUCT), Your Process, Reimagined with AI(add personal touch), We Design AI That Gets the Job Done—Without You Lifting a Finger(add personal touch)). Then Start with telling the leads that you were going through your profile and talk a bit about his company. Then in next para, talk about problems in the industry of his company and introduce your product stating how it solve this problem. Get the details from product_details section. Then a compelling CTA asking him to schedule a meet or a call to discuss it further. Keep it short direct, casual, catchy and dont use too much formal jargonand avoid common templates (like I hope this email finds you well, etc). It should look as it is written by a human after carefully studying his profile and his company's details.```
-Lead Details: {lead_details}
-Product Information: {product_details}
-Generate a personalized email following the format specified in the prompt above.
-Return the results in a dictionary with these keys:
-1. 'subject': The email subject line (style as provided)
-2. 'body': The email body content
-3. 'lead_id': The lead ID
-Make sure the email is unique and highly personalized based on the lead's profile and relevant product features.
-"""
+   
+
     
     # Structure the output in given pydantic format
     structured_email = model.with_structured_output(EmailResponse)
 
     # Invoke the model to generate the email
-    email_response = structured_email.invoke(instructed_prompt)
+    email_response = structured_email.invoke(messages)
 
     # Convert the email response to a dictionary    
     email_response_dict = email_response.model_dump()
