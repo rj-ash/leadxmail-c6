@@ -439,7 +439,11 @@ Lead Details:
 
 Return the results in a dictionary with these keys:
 1. 'subject': The email subject line (style as provided)
-2. 'body': The email body content
+2. 'body': The email body content. It must contain;
+    - Greeting with the lead's name
+    - Content in multiple paragraphs in the above mentioned style
+    - Closing with a call to action
+    - Sender's contact details (Take from the ProductDetails section, skip if not provided)
 3. 'lead_id': The lead ID
 
 """
@@ -453,7 +457,7 @@ Return the results in a dictionary with these keys:
     model = ChatOpenAI(
         model="gpt-4o-mini",
         openai_api_key=api_key,
-        temperature=0.9,
+        temperature=0.7,
         max_tokens=4096,
     )
         
