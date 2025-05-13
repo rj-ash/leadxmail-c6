@@ -16,12 +16,18 @@ class EmailResponse(BaseModel):
     lead_id: str
 
 # Define the email generation prompt
-prompt = """You are an B2B expert marketer. Based on the list of leads, their details and the product document provides , write a personalized email to the lead  in a concise manner, keeping in mind they have limited time to read the email. Write in a way that a fifth year student can understand and state your objective of helping the lead with your product"""
 style = """
-START THE EMAIL WITH A HEADLINE (ALL CAPS, STATE PURPOSE OF THE PRODUCT IN ONE LINE, E.G. WE WANT TO AUTOMATE YOUR ENTIRE HIRING PROCESS (DEPENDING ON THE PRODUCT), YOU FOCUS ON GROWTH. LET THE AI HANDLE (THE MANUAL WORK THAT WE ARE AUTOMATING WITH OUR PRODUCT), Your Process, Reimagined with AI(add personal touch), We Design AI That Gets the Job Done—Without You Lifting a Finger(add personal touch))
-Do not use any common templates like I hope this email finds you well, etc.
+Start with a greeting and then go on to say that you are reaching out because of [reason].
 Do not use too much buttering and unnecessary words specially after the first line (I was going through your profile and noticed your inspiring journey is phenomenal,fabulous, etc. Don't use such unnecessary buttering. Jus go like "I was going through your profile and noticed [mention things which are relevant to product and matches with the lead's profile, no unnecessary buttering]")
-Be casual, friendly and direct. Use human like tone and language. Follow this style:
+Be casual, friendly and direct. 
+It should be a short, personalized email (100–150 words) to a potential lead who could benefit from your product/service/solution. It should:
+                    1.	Start with deep personalization — Reference something specific about the lead’s business, role, recent announcement, or pain point you’ve identified. Show you understand them—not just their company name.
+                    2.	Make a relevant connection — Briefly explain who you are and why you’re reaching out. Make it clear why they specifically are a fit for what you offer.
+                    3. Talk about the problems in the lead's industry and how the product can solve the problem.
+                    4.	Focus on value (not features) — Position your solution around a problem or opportunity that matters to them. Avoid a hard sell—offer insight, benefit, or a useful idea that shows you can help.
+                    5.	Keep it short and natural — Write like a human, not a sales robot. End with a simple CTA (e.g., “open to a quick chat?” or “would you be interested in exploring this further?”).
+
+Use human like tone and language. Follow this style:
 1. First Person Pronouns: I, me, my, mine, we, us, our, ours. Write as if you are the one talking to the lead and do not use generalised statements.
 2. Fillers & Disfluencies
 Spoken or informal written human language often includes:
@@ -41,6 +47,353 @@ Humans express feelings impulsively or with less filter:
 	•	wow, amazing, omg, haha, lol, damn, yay
 	•	love it, hate that, so cool, super weird
 """
+
+product_database = """
+parchaa = {
+    "problem_it_solves": (
+        "Long OPD wait times due to high patient footfall; "
+        "short consultation durations and overworked staff; "
+        "manual processes and lack of automation; "
+        "poor patient engagement and adherence; "
+        "lack of authentic health data for governance and research; "
+        "insufficient infrastructure and digital tools in rural/NGO settings; "
+        "inefficiencies and errors in emergency room triaging; "
+        "limited mental healthcare access in academic institutions."
+    ),
+    "solution": (
+        "A comprehensive AI-powered digital health platform covering OPD, emergency, air-gapped, and wellness workflows. "
+        "It supports the full healthcare journey—onboarding, consultation, follow-up, and monitoring—while being interoperable "
+        "with existing hospital systems and government initiatives like ABHA and Ayushman Bharat. "
+        "It offers remote, offline-compatible deployments, smart dashboards, and CDSS support."
+    ),
+    "unique_selling_point": (
+        "End-to-end digital healthcare platform functional in both online and offline modes; "
+        "powered by advanced AI/LLM models trained on Indian and global clinical standards (ICMR, WHO, CDC, etc.); "
+        "first-in-class emergency room automation tools including triage classification and resource dashboards; "
+        "deep focus on underserved areas and community care; "
+        "modular, white-label deployment suitable for hospitals, NGOs, and academic institutions."
+    ),
+    "features": (
+        "Smart OPD with AI-led triaging, diagnosis, and prescriptions; "
+        "Clinical Decision Support System (CDSS) with alerts for ADRs and contra-indications; "
+        "Patient app with teleconsultation, medication reminders, and adherence tracking; "
+        "Emergency module with auto-triaging and saturation dashboards; "
+        "Air-gapped mode for rural deployment with vitals tracking, inventory management, and follow-up tools; "
+        "WellKiwi for campus wellness including mental health support, insurance, and health analytics; "
+        "Dashboards for administrators, wardens, and doctors; "
+        "Interoperability with existing HIS, ABHA, PHRs, pharmacies, and diagnostics (e.g., 1mg integration)."
+    ),
+    "benefits": (
+        "Reduces patient wait time and improves quality of consultations; "
+        "supports doctors with AI-based decision tools; "
+        "boosts hospital efficiency through automation and data insights; "
+        "enables healthcare access in rural and remote regions; "
+        "improves patient follow-up, engagement, and outcomes; "
+        "promotes mental wellness and proactive health management in students; "
+        "enables fast, accurate emergency triaging; "
+        "standardizes care protocols and improves collaboration among stakeholders."
+    )
+}
+,
+"predCo": {
+  "problem_it_solves": [
+    "Unplanned equipment failures causing production delays and financial losses.",
+    "Inefficient maintenance strategies leading to safety concerns and operational disruptions.",
+    "Fragmented systems and lack of centralized monitoring in industrial operations.",
+    "Lack of real-time visibility and decision-making across assets and departments.",
+    "Stockouts, overstocking, and asset mismanagement in supply chain operations.",
+    "Manual, error-prone inventory tracking methods.",
+    "Delayed threat detection and response in surveillance operations."
+  ],
+  "solution": [
+    "AI-powered predictive maintenance and condition monitoring platform.",
+    "Digital Twin technology to simulate and optimize operations in real time.",
+    "Smart inventory management using RFID and computer vision.",
+    "Centralized monitoring and data integration for legacy systems and SCADA.",
+    "GenAI-powered assistants for real-time document retrieval and support.",
+    "Geofencing solutions for real-time asset tracking and alerts.",
+    "Role-based access and proactive alert systems for operations control."
+  ],
+  "unique_selling_point": [
+    "Unified AI-driven platform integrating IoT, ML, and digital twin technologies.",
+    "Real-time actionable insights across a wide array of machinery and assets.",
+    "Highly scalable and adaptable solutions tailored for legacy and modern systems.",
+    "Seamless integration with existing infrastructure, no new hardware needed.",
+    "Use-case agnostic architecture spanning energy, manufacturing, logistics, and security."
+  ],
+  "features": [
+    "Dynamic dashboards with real-time visualization and KPI tracking.",
+    "Customizable alerts based on threshold breaches and anomaly detection.",
+    "Real-time data acquisition from diverse IoT sensors.",
+    "Integrated ML models to predict equipment failure and remaining useful life.",
+    "Computer vision for automated shelf and item recognition.",
+    "GenAI tools for document digitization and knowledge retrieval.",
+    "Geofencing alerts and asset movement tracking.",
+    "Role-based access and operational rule configuration."
+  ],
+  "benefits": [
+    "Reduce equipment downtime by 35-40%.",
+    "Extend asset lifespan by up to 30%.",
+    "Lower maintenance costs by 8-12%.",
+    "Improve inventory turnover by 40% and reduce shrinkage by 50%.",
+    "Minimize manual monitoring efforts and decision-making delays.",
+    "Achieve up to 87% accuracy in lifecycle predictions of critical components.",
+    "Enhance workplace safety and compliance through AI-powered surveillance.",
+    "Boost operational transparency and inter-departmental collaboration."
+  ]
+},
+"InvestorBase": {
+    "problem_it_solves": [
+        "Overwhelming volume of inbound pitch decks makes it hard for VCs to evaluate each one thoroughly.",
+        "Current deal evaluation processes are manual, slow, biased, and inconsistent.",
+        "Due diligence is time-consuming, taking up to 2 weeks per deal.",
+        "Missed opportunities due to delays and inefficient workflows."
+    ],
+    "solution": [
+        "AI-driven pitch deck analyzer that extracts key information instantly.",
+        "Human-augmented analysis ensures depth and credibility of insights.",
+        "Dynamic opportunity scoring aligned with the fund’s investment thesis.",
+        "Automated red flag detection, validation, and memo generation."
+    ],
+    "unique_selling_point": [
+        "Combines speed and precision of AI with expert analyst judgment.",
+        "Customizable scoring tailored to specific investment theses.",
+        "Scalable solution that handles 10 to 1,000+ decks per month.",
+        "Delivers analyst-grade insights in 24–48 hours."
+    ],
+    "features": [
+        "Pitch Deck Analyzer – instant insights from uploaded decks.",
+        "Thesis Alignment – auto scoring of decks based on fund criteria.",
+        "InsightMaster – AI assistant for deeper analysis.",
+        "Auto Analysis + Alerts – real-time notifications for matching deals.",
+        "Market Intel – context-rich competitive and news insights.",
+        "Investor Research – deeper, customized insights beyond basic data.",
+        "Automated Collection – centralized collection from various sources.",
+        "Investor Memos – auto-generated, ready-to-use investment memos."
+    ],
+    "benefits": [
+        "Faster and smarter deal evaluation with reduced manual effort.",
+        "Increased chances of discovering high-potential investments.",
+        "Higher quality decisions through objective and consistent scoring.",
+        "Significant time savings in screening and due diligence.",
+        "Enhanced founder engagement and reduced deal drop-offs."
+    ]
+},
+   "sankalpam": {
+    "problem_it_solves": "Inefficient temple operations, outdated communication, inadequate resource management, limited accessibility for devotees, and challenges in preserving cultural heritage and managing religious tourism.",
+    
+    "solution": "A technology-driven platform that empowers temples through AI, IoT, and cloud tools to improve operational efficiency, enhance devotee engagement, enable secure fundraising, digitize cultural assets, and modernize communication.",
+    
+    "unique_selling_point": "Sankalpam bridges the gap between tradition and modernity, offering temples smart management tools, immersive devotee experiences, and government collaboration frameworks, all under one unified platform.",
+    
+    "features": [
+        "AI-powered surveillance and crowd control",
+        "IoT-enabled resource and environmental monitoring",
+        "Mobile app for temple services, communication, and ticketing",
+        "Digital donation platforms with global access",
+        "AR/VR-based cultural immersion experiences",
+        "Live streaming of religious rituals (Darshan)",
+        "Virtual pooja booking (Sankalp)",
+        "Online astrology consultations (Jyotish Vani)",
+        "Sacred offering delivery (Prasadam)",
+        "Pilgrimage planning assistance (Yatra)",
+        "Comprehensive Hindu knowledge repository (Gyan Kosh)"
+    ],
+    
+    "benefits": {
+        "For Temples": [
+            "Enhanced operational efficiency and crowd management",
+            "Reduced administrative costs and better resource allocation",
+            "Increased donations and new revenue streams",
+            "Greater transparency in financial management",
+            "Improved security and heritage preservation"
+        ],
+        "For Devotees": [
+            "Seamless access to services through online bookings and virtual participation",
+            "Personalized spiritual experiences",
+            "Improved accessibility for elderly and differently-abled",
+            "Interactive cultural education and deeper immersion"
+        ],
+        "For Governments": [
+            "Smart heritage management using data and AI",
+            "Boosted religious tourism and economic development",
+            "Stronger cultural preservation and social impact through temple-centric community engagement"
+        ]
+    }
+},
+"Opticall": {
+    "problem_it_solves": 
+        "General: High call volumes, inconsistent call handling quality, delayed insights, and ineffective coaching that increase costs and reduce performance.\n"
+        "Sales Center: Sales reps face chaotic lead volumes, cold leads, and lack real-time visibility into performance gaps, resulting in missed revenue opportunities.\n"
+        "Contact Center: Overwhelmed agents, long wait times, inconsistent service, and buried insights lead to high costs, low customer satisfaction, and limited performance visibility.",
+    
+    "solution": 
+        "General: A unified AI platform that automates queries via bots, supports agents in real time, and converts raw call data into actionable insights through customizable dashboards.\n"
+        "Sales Center: Automates repetitive lead engagement, provides real-time pitch coaching, and surfaces deep post-call insights to optimize sales conversions.\n"
+        "Contact Center: Automates customer queries with virtual agents, supports agents with real-time assistance, and delivers performance insights from every call to improve support quality.",
+    
+    "unique_selling_point": 
+        "General: Modular, phygital-ready architecture with deep tech and lightweight deployment that fits any workflow and delivers real-time insights across audio, video, and text.\n"
+        "Sales Center: Requires no change in existing sales workflows—adapts to your team with flexible tools, custom templates, and sales-specific dashboards.\n"
+        "Contact Center: Fully customizable to existing support operations, delivering automation and real-time coaching without altering how your team works.",
+    
+    "features": 
+        "General: Agent Assist, automated call scoring, dynamic dashboards, vernacular engine (28+ languages), real-time prompts, and video/audio analytics.\n"
+        "Sales Center: Virtual sales agents, real-time objection handling, pitch prompts, AI-powered knowledge base, performance dashboards, multilingual support, and coaching tools.\n"
+        "Contact Center: AI-powered virtual agents, real-time agent guidance with visual checklists, instant knowledge access, automated escalations, coaching hub, and compliance support.",
+    
+    "benefits": 
+        "General: +18 CSAT points, 95% QA coverage (up from 2%), and 22% reduction in support costs with real-time insights and automation.\n"
+        "Sales Center: 12% increase in conversions, 9% growth in monthly bookings, 18% reduction in customer acquisition cost, and accelerated deal closures.\n"
+        "Contact Center: +18 CSAT points, 98% QA cove
+,
+    "IndikaAI": {
+        "problem_it_solves": (
+            "Enterprises face challenges in AI adoption due to unclear AI roadmaps, data readiness issues, "
+            "lack of internal expertise, difficulty integrating AI with existing systems, and rapid technology changes. "
+            "These factors hinder ROI and effective AI implementation."
+        ),
+        "solution": (
+            "Indika AI provides end-to-end AI solutions, including strategy formulation, data preparation, "
+            "foundation model selection, model fine-tuning, deployment, and continuous monitoring. It offers tailored "
+            "products for industries like healthcare, judiciary, infrastructure, and customer service."
+        ),
+        "unique_selling_point": (
+            "Comprehensive AI development lifecycle support, domain-specific AI products, access to 50,000+ experts "
+            "across 100+ languages, and experience across sectors including judiciary, healthcare, infrastructure, and BFSI."
+        ),
+        "features": (
+            "• AI strategy and roadmap development\n"
+            "• Data digitization, anonymization, and labeling\n"
+            "• Custom generative AI, NLP, computer vision, and audio processing\n"
+            "• Platforms like DigiVerse (digitization), DataStudio (model training), FlexiBench (expert workforce)\n"
+            "• Industry-specific AI solutions (Nyaay AI, PredCo, RoadVision AI, Parchaa AI, Choice AI)\n"
+            "• Ready-to-deploy tools (OCR, speech-to-text, trust & safety, synthetic data generation)"
+        ),
+        "benefits": (
+            "• Faster and smoother AI adoption\n"
+            "• Improved operational efficiency and automation\n"
+            "• Enhanced decision-making through AI-powered insights\n"
+            "• Access to scalable AI solutions tailored to specific industries\n"
+            "• Expert support across all AI development stages\n"
+            "• Multilingual and multidisciplinary support"
+        )
+},
+"Flexibench": {
+    "problem_it_solves": "Lack of trained professionals with domain-specific expertise to contribute to AI systems effectively; need for culturally and linguistically aware AI development.",
+    "solution": "A talent development hub that trains domain experts in hands-on AI tasks (e.g., data labeling, RLHF, annotation), offering real project experience and earnings while learning.",
+    "unique_selling_point": "Combines real-world AI project exposure with specialized domain training and global language support, turning professionals into AI contributors.",
+    "features": [
+        "Training across 100+ languages for localization and bias reduction",
+        "Tailored learning paths in fields like law, medicine, engineering, and linguistics",
+        "Real industry experience through live AI projects",
+        "Focus on essential AI lifecycle skills (data labeling, RLHF, annotation)",
+        "Support for 20+ academic fields with 60,000+ experts onboarded"
+    ],
+    "benefits": [
+        "Earn while gaining AI industry experience",
+        "Transform domain knowledge into valuable AI contributions",
+        "Enable accurate, culturally aware AI systems",
+        "Promote India's global role in AI excellence",
+        "Join a global network of trained professionals for AI projects"
+    ]
+},
+"InspireAI": {
+    "problem_it_solves": "Content creators and marketers face burnout, creative blocks, and inefficiencies when generating engaging and consistent content across platforms.",
+    "solution": "InspireAI offers an AI-powered platform that generates personalized, high-quality, and engaging content at scale, reducing the creative workload and boosting productivity.",
+    "unique_selling_point": "Combines personalization, scalability, and creative storytelling powered by AI, tailored specifically for content marketers and creators.",
+    "features": [
+        "AI-driven content generation",
+        "Personalized content suggestions",
+        "Multi-platform optimization",
+        "Content calendar integration",
+        "Real-time collaboration tools",
+        "Performance analytics and insights"
+    ],
+    "benefits": [
+        "Saves time and reduces creative fatigue",
+        "Increases content output without compromising quality",
+        "Boosts audience engagement through personalized storytelling",
+        "Streamlines content workflow for teams and individuals",
+        "Improves ROI through data-driven content strategies"
+    ]
+},
+"Insituate": {
+    "problem_it_solves": (
+        "Businesses struggle with rapid AI advancements due to lack of AI talent, "
+        "compliance concerns (handling sensitive data), and compatibility issues with legacy systems."
+    ),
+    "solution": (
+        "A secure, no-code, end-to-end AI development platform enabling enterprises to adopt "
+        "state-of-the-art LLMs and RAG pipelines, while keeping all data in-house."
+    ),
+    "unique_selling_point": (
+        "The only platform to offer a no-code, one-stop solution for building end-to-end AI copilots "
+        "that integrate with legacy systems and prioritize data security."
+    ),
+    "features": (
+        "• In-situ (on-premise) database\n"
+        "• No-code development interface\n"
+        "• Ironclad security protocols\n"
+        "• State-of-the-art LLM and RAG integration\n"
+        "• 100+ pre-built templates\n"
+        "• Compatibility with legacy software\n"
+        "• Gridsearch for copilot optimization\n"
+        "• Sentry mode for continuous improvement\n"
+        "• AutoLLM deployment within a week\n"
+        "• LLMOps capabilities\n"
+        "• On-cloud and on-premise deployment options\n"
+        "• Team collaboration and one-click export"
+    ),
+    "benefits": (
+        "• Accelerates enterprise AI adoption without requiring in-house AI talent\n"
+        "• Maintains data privacy and regulatory compliance\n"
+        "• Saves time and cost (AutoLLM in 1 week vs. traditional 24 months)\n"
+        "• Streamlines development and deployment with minimal technical barriers\n"
+        "• Empowers internal teams to create domain-specific copilots\n"
+        "• Taps into a large, global, multi-vertical market"
+    )
+},
+"choiceAI": {
+    "problem_it_solves": (
+        "1. Lack of regulatory framework for OTT content certification.\n"
+        "2. Inability of OTT platforms to filter offensive or harmful content effectively.\n"
+        "3. Viewer concerns about exposure to explicit/inappropriate content and lack of parental controls.\n"
+        "4. Production houses face delays and risks in content release due to censorship.\n"
+        "5. Lack of personalized content access and inclusivity for diverse viewers."
+    ),
+    "solution": (
+        "1. AI tool that ensures responsible content distribution and compliance.\n"
+        "2. Personalized viewer experience using advanced tagging and filtering.\n"
+        "3. Parental controls and content warnings to protect minors and sensitive viewers.\n"
+        "4. Streamlined certification and approval process for content creators.\n"
+        "5. Intelligent content assessment to maintain compliance without limiting creativity."
+    ),
+    "unique_selling_point": (
+        "Only solution offering comprehensive customization, real-time AI moderation, "
+        "personalized viewing, compliance with censorship, and collaboration with CBFC and OTT platforms."
+    ),
+    "features": (
+        "1. Choice Tagger: Tags content (e.g., sex, violence, nudity) for CBFC and OTT.\n"
+        "2. Choice Viewer: Lets users filter content based on tags.\n"
+        "3. AI-powered moderation and certification.\n"
+        "4. Personalized recommendations and curated experiences.\n"
+        "5. Parental control and age-based filtering.\n"
+        "6. Collaboration tools for CBFC and independent creators.\n"
+        "7. OEM integration with OTT platforms."
+    ),
+    "benefits": (
+        "1. Viewers enjoy safe, personalized, and culturally sensitive content.\n"
+        "2. Parents can restrict inappropriate content for children.\n"
+        "3. Content creators maintain creative freedom while complying with regulations.\n"
+        "4. OTT platforms enhance user experience and reduce legal risk.\n"
+        "5. CBFC streamlines verification and sets unified digital standards.\n"
+        "6. Independent creators gain exposure and platform support.\n"
+        "7. Faster content approval and reduced release delays."
+    )
+}
+"""
+
 def generate_email_for_single_lead(lead_details: dict, product_details: str) -> dict:
     """
     Generate a personalized email for a single lead
@@ -59,6 +412,34 @@ def generate_email_for_single_lead(lead_details: dict, product_details: str) -> 
     Returns:
         dict: Dictionary containing 'subject', 'body', and 'lead_id' of the email
     """
+    messages = [
+        {
+            "role": "system",
+            "content": (
+                "You are an B2B expert marketer. Based on the list of leads, their details and the product document provides , write a personalized email to the lead  in a concise manner, keeping in mind they have limited time to read the email. Write in a way that a fifth year student can understand and state your objective of helping the lead with your product"""
+                "You avoid formal templates, skip unnecessary flattery, and talk like a real person. Follow the tone and style guide provided."
+                "Refer product database as per the given product details for context, problems in lead's industry and how the product can solve the problem, {product_database}"
+                "Do fact check about the problems and after verifying the facts, put them in the email else dont."
+            )
+        },
+        {
+            "role": "user",
+            "content": f"""
+Task:
+Write a personalized email for the lead above. Follow the subject/body formatting rules. Return the result in a JSON object with keys: 'subject', 'body', and 'lead_id'. Make sure the email must not contain any placeholders (like [xyz]). For sender's contact details, use the details given in the "ProductDetails" section.
+
+Style Guide:
+{style}
+
+Lead Details:
+{lead_details}
+
+"ProductDetails":
+{product_details}
+
+"""
+        }
+    ]
     try:
         api_key = os.getenv("OPENAI_API_KEY")
     except Exception as e:
