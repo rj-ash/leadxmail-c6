@@ -21,7 +21,7 @@ Start with a greeting and then go on to say that you are reaching out because of
 Do not use too much buttering and unnecessary words specially after the first line (I was going through your profile and noticed your inspiring journey is phenomenal,fabulous, etc. Don't use such unnecessary buttering. Jus go like "I was going through your profile and noticed [mention things which are relevant to product and matches with the lead's profile, no unnecessary buttering]")
 Be casual, friendly and direct. 
 It should be a short, personalized email (100–150 words) to a potential lead who could benefit from your product/service/solution. It should:
-                    1.	Start with deep personalization — Reference something specific about the lead’s business, role, recent announcement, or pain point you’ve identified. Show you understand them—not just their company name.
+                    1.	Start with deep personalization — Reference something specific about the lead’s business, role, recent announcement, or pain point you’ve identified. Show you understand them—not just their company name. Use different phrases/styles/variation/words to start the email.
                     2.	Make a relevant connection — Briefly explain who you are and why you’re reaching out. Make it clear why they specifically are a fit for what you offer.
                     3. Talk about the problems in the lead's industry and how the product can solve the problem.
                     4.	Focus on value (not features) — Position your solution around a problem or opportunity that matters to them. Avoid a hard sell—offer insight, benefit, or a useful idea that shows you can help.
@@ -453,7 +453,7 @@ Return the results in a dictionary with these keys:
     model = ChatOpenAI(
         model="gpt-4o-mini",
         openai_api_key=api_key,
-        temperature=1.1,
+        temperature=0.9,
         max_tokens=4096,
     )
         
