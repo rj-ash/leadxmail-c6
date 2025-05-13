@@ -453,7 +453,7 @@ Return the results in a dictionary with these keys:
     model = ChatOpenAI(
         model="gpt-4o-mini",
         openai_api_key=api_key,
-        temperature=0.7,
+        temperature=1.5,
         max_tokens=4096,
     )
         
